@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boni AI Prank</title>
+<style>
+body{margin:0;background:#07111f;color:#fff;font-family:Arial,sans-serif;overflow:hidden}
+.page{display:none;height:100vh;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:20px}
+.active{display:flex}
+.card{background:rgba(255,255,255,.08);padding:25px;border-radius:20px;max-width:700px}
+button{padding:12px 24px;border:none;border-radius:25px;cursor:pointer}
+.bar{width:320px;height:22px;background:#222;border-radius:20px;overflow:hidden}
+.fill{height:100%;width:0;background:#00d4ff}
+.emoji{position:fixed;bottom:-50px;pointer-events:none;animation:floatEmoji linear forwards;z-index:999}
+@keyframes floatEmoji{from{transform:translateY(0);opacity:1}to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<div id="p1" class="page active">
+<h1>🤖 BONI AI SYSTEM</h1>
+<div class="bar"><div id="load" class="fill"></div></div>
+<h2 id="pct">0%</h2>
+</div>
+
+<div id="p2" class="page"><div class="card"><h2>⚠️ Confidential Notice</h2><p>User BONI detected.</p><button onclick="nextPage('p3')">Continue</button></div></div>
+
+<div id="p3" class="page"><div class="card"><h2 id="scan">Scanning WhatsApp...</h2><div class="bar"><div id="scanbar" class="fill"></div></div></div></div>
+
+<div id="p4" class="page"><div class="card"><h2>AI Results</h2><p>Cuteness 98%</p><p>Drama 72%</p><p>Food Addiction 100%</p><button onclick="nextPage('p5')">Open Secret File</button></div></div>
+
+<div id="p5" class="page"><div class="card"><h2>💌 Secret File</h2><p>Boni has been classified as a Rare Human Being 😂</p><button onclick="nextPage('p6')">Final Question</button></div></div>
+
+<div id="p6" class="page"><div class="card"><h2>Are you awesome?</h2><button onclick="nextPage('p7')">YES</button><button id="moveBtn">NO</button></div></div>
+
+<div id="p7" class="page"><div class="card"><h1>🏆 ANALYSIS COMPLETE</h1><p>Bakbak Level: 999%</p><h2 id="count">5</h2></div></div>
+
+<script>
+function nextPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ if(id==='p7') countdown();
+}
+let p=0;
+let loader=setInterval(()=>{
+ p++;
+ load.style.width=p+'%';
+ pct.innerText=p+'%';
+ if(p>=100){clearInterval(loader);nextPage('p2');}
+},25);
+
+setTimeout(()=>{
+ nextPage('p3');
+ let s=0;
+ const msgs=['Scanning WhatsApp...','Checking Reply Speed...','Analyzing Food Addiction...','Generating Report...'];
+ let t=setInterval(()=>{
+ s++;
+ scanbar.style.width=s+'%';
+ if(s%25===0) scan.innerText=msgs[Math.min(msgs.length-1,s/25-1)];
+ if(s>=100){clearInterval(t);nextPage('p4');}
+ },30);
+},3500);
+
+moveBtn.onmouseover=function(){
+ this.style.position='absolute';
+ this.style.left=Math.random()*80+'vw';
+ this.style.top=Math.random()*80+'vh';
+};
+
+function countdown(){
+ let n=5;
+ let c=setInterval(()=>{
+  n--;
+  count.innerText=n;
+  if(n<=0){clearInterval(c);count.innerText='Just Kidding 😂';}
+ },1000);
+}
+
+const emojis=["😂","🤣","😆","💙","✨","🎉","😎","🤨","🍕"];
+setInterval(()=>{
+ let e=document.createElement('div');
+ e.className='emoji';
+ e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+ e.style.left=Math.random()*100+'vw';
+ e.style.fontSize=(20+Math.random()*25)+'px';
+ e.style.animationDuration=(5+Math.random()*5)+'s';
+ document.body.appendChild(e);
+ setTimeout(()=>e.remove(),10000);
+},300);
+</script>
+</body>
+</html>
